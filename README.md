@@ -12,6 +12,12 @@ Harjoitustyön aiheena on toteuttaa  keskustelufoorumi perinteiseen tyyliin. Kä
 * käyttäjät voivat hakea viestejä
 * Ylläpitäjän käyttäjä
   * ylläpitäjä voi poistaa ja lisätä ala-osioita, sekä muiden käyttäjien ketjuja
-  *käyttäjät voivat ilmoittaa viestejä ylläpidolle
+  * käyttäjät voivat ilmoittaa viestejä ylläpidolle
  
 HUOM! Käyttäjät eivät voi poistaa tai muokata omia viestejään.
+
+
+# Ominaisuudet
+- [x] rekisteröityminen ja kirjautuminet
+- [ ] admin
+- [ ] keskustelualueet
