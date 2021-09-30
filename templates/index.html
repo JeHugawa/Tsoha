@@ -1,0 +1,11 @@
+{% if session.username %}
+<h1>Tervetuloa TSOHA-foorumille</h1>
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<h1>Tervetuloa TSOHA-foorumille</h1>
+<p>et ole Kirjautunut sisään</p>
+<a href="/login">Kirjaudu</a>
+<p> Ei ole käyttäjää?</a>
+<a href="/register">Rekisteröidy täällä</a>
+{% endif %}

@@ -1,0 +1,14 @@
+{% if session.username %}
+<p> Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<form action="/register" method="POST">
+<p>Tunnus:<br>
+<input type="text" name="username"></p>
+<p>Salasana:<br>
+<input type="password" name="password"></p>
+<p>Salasana uudestaan:<br>
+<input type="password" name="password2"></p>
+<input type="submit" value="Register">
+</form>
+{% endif %}
