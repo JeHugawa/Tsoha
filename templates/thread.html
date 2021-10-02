@@ -1,0 +1,8 @@
+<hr>
+{% for content in messages %}
+<a> send by <i> anonymous</i> at </a> {{ content[0] }}
+<p>
+{{ content[1] }}
+<p>
+<hr>
+{% endfor %}

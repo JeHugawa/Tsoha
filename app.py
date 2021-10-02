@@ -59,3 +59,10 @@ def logout():
     del session["username"]
     return redirect("/")
 
+
+@app.route("/b/<int:board_id>/<int:thread_id>", methods=["GET"])
+def page(board_id, thread_id):
+    if request.method == "GET":
+        sql = "SELECT M.sent, M.message FROM message M"
+        payload = db.session.execute(sql)
+        return render_template("thread.html", messages=payload)
