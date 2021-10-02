@@ -3,7 +3,7 @@
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 <hr>
-<a href="/b/1/1"> devaus keskustelu </a>
+<a href="/1/1"> devaus keskustelu </a>
 {% else %}
 <h1>Tervetuloa TSOHA-foorumille</h1>
 <p>et ole Kirjautunut sisään</p>
@@ -11,3 +11,9 @@
 <p> Ei ole käyttäjää?</a>
 <a href="/register">Rekisteröidy täällä</a>
 {% endif %}
+<hr>
+<ul>
+    {% for board in boards %}
+    <li> <A href="/{{ board[0] }}">{{ board[1] }}</a> </li>
+    {% endfor %}
+</ul>

@@ -12,7 +12,9 @@ CREATE TABLE boards (
 
 CREATE TABLE threads (
     id SERIAL PRIMARY KEY,
-    board_id INTEGER REFERENCES boards
+    board_id INTEGER REFERENCES boards,
+    topic TEXT,
+    sent TIMESTAMP
 );
 
 CREATE TABLE message (

@@ -19,5 +19,9 @@ HUOM! Käyttäjät eivät voi poistaa tai muokata omia viestejään.
 
 # Ominaisuudet
 - [x] rekisteröityminen ja kirjautuminet
+- [x] keskusteluiden katseleminen
+- [x] keskustelualuiden listaus
+    - [ ] ketjujen "esikatselu"
+- [ ] viestien lähettäminen
 - [ ] admin
 - [ ] keskustelualueet

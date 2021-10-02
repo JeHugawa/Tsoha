@@ -1,0 +1,13 @@
+<H1> {{ metainfo[0] }} </H1>
+<p> {{ metainfo[1] }} </p>
+<hr>
+{% for thread in board %}
+<h3> {{ thread[0] }} </h3>
+<hr style="width:50%;text-align:left;margin-left:0">
+<p>
+<a href="/{{ thread[1] }}/{{ thread[2] }}">
+<p>
+<a> send at {{ thread[3] }} </a>
+<hr>
+{% endfor %}
+

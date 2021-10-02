@@ -11,7 +11,9 @@ app.secret_key = getenv("SECRET_KEY")
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    sql = "SELECT id,name FROM boards"
+    result = db.session.execute(sql)
+    return render_template("index.html",boards=result)
 
 
 @app.route("/login", methods=["POST","GET"])
@@ -60,9 +62,19 @@ def logout():
     return redirect("/")
 
 
-@app.route("/b/<int:board_id>/<int:thread_id>", methods=["GET"])
+@app.route("/<int:board_id>", methods=["GET"])
+def board(board_id):
+    if request.method == "GET":
+        sql = "SELECT name, description FROM boards WHERE id=:id"
+        info = db.session.execute(sql,{"id":board_id})
+        sql = "SELECT topic, board_id, id, sent FROM threads where board_id=:board_id"
+        result = db.session.execute(sql, {"board_id":board_id})
+        return render_template("boards.html",board=result, metainfo=info)
+
+
+@app.route("/<int:board_id>/<int:thread_id>", methods=["GET"])
 def page(board_id, thread_id):
     if request.method == "GET":
-        sql = "SELECT M.sent, M.message FROM message M"
-        payload = db.session.execute(sql)
+        sql = "SELECT M.sent, M.message FROM message M WHERE M.thread_id=:thread_id"
+        payload = db.session.execute(sql,{"thread_id":thread_id})
         return render_template("thread.html", messages=payload)
