@@ -1,4 +1,13 @@
 <hr>
+{% if session.username %}
+<form action="/{{ board_id }}/{{ thread_id }}" method=POST>
+<p>uusi viesti</p>
+<textarea name="message" rows="6" cols="40"></textarea>
+<p>
+<input type="submit" value="lähetä">
+<p>
+</form>
+{% endif %}
 {% for content in messages %}
 <a> send by <i> anonymous</i> at </a> {{ content[0] }}
 <p>

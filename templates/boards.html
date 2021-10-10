@@ -1,11 +1,14 @@
-<H1> {{ metainfo[0] }} </H1>
-<p> {{ metainfo[1] }} </p>
+<center>
+<h1> {{ metainfo[0] }} </h1>
+{{ metainfo[1] }}
+<p>
 <hr>
+</center>
 {% for thread in board %}
 <h3> {{ thread[0] }} </h3>
 <hr style="width:50%;text-align:left;margin-left:0">
 <p>
-<a href="/{{ thread[1] }}/{{ thread[2] }}">
+<a href="/{{ thread[1] }}/{{ thread[2] }}"> mene keskusteluun </a>
 <p>
 <a> send at {{ thread[3] }} </a>
 <hr>
