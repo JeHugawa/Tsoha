@@ -63,7 +63,7 @@ def board(board_id):
         sql = "SELECT name, description FROM boards WHERE id=:board_id"
         result = db.session.execute(sql, {"board_id":board_id})
         info = result.fetchone()
-        sql = "SELECT topic, board_id, id, sent FROM threads where board_id=:board_id"
+        sql = "SELECT topic, board_id, id, sent FROM threads where board_id=:board_id ORDER BY id DESC"
         result = db.session.execute(sql, {"board_id":board_id})
         return render_template("boards.html",board=result, metainfo=info, board_id=board_id)
     if request.method == "POST":
