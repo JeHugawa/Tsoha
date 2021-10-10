@@ -2,6 +2,12 @@
 
 Harjoitustyön aiheena on toteuttaa  keskustelufoorumi perinteiseen tyyliin. Käyttäjät voivat aloittaa halutuille ala-osioille keskusteluketjun mihin muut käyttäjät voivat sitten vastata.
 
+
+## Heroku
+
+Sovellusta voi testata osoitteessa https://tsohakeskustelufoorumi.herokuapp.com/
+
+
 ## Keskeisiä ominaisuuksia:
 * Käyttäjät voivat kirjautua tai rekisteröityä
 * Käyttäjät voivat luoda valitsemalleen ala-osioille uuden ketjun ja vastata olemassaoleviin
