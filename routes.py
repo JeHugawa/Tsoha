@@ -25,6 +25,7 @@ def login():
             hash_value = user.password
             if check_password_hash(hash_value, password):
                 session["username"] = username
+                session["user_id"] = user.id
                 return redirect("/")
             else:
                 return render_template("error.html", message="Salasana ei täsmää")
@@ -52,6 +53,7 @@ def register():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["user_id"]
     return redirect("/")
 
 
@@ -66,6 +68,8 @@ def board(board_id):
         return render_template("boards.html",board=result, metainfo=info)
 
 
+
+
 @app.route("/<int:board_id>/<int:thread_id>", methods=["GET","POST"])
 def page(board_id, thread_id):
     if request.method == "GET":
@@ -74,4 +78,7 @@ def page(board_id, thread_id):
         return render_template("thread.html", messages=payload, board_id=board_id, thread_id=thread_id)
     if request.method == "POST":
         message = request.form["message"]
-    
+        sql = "INSERT INTO message (thread_id, poster_id, sent, message) VALUES (:thread_id, :poster_id, CURRENT_TIMESTAMP, :message)"
+        db.session.execute(sql, {"thread_id":thread_id, "poster_id":session["user_id"], "message":message})
+        db.session.commit()
+        return redirect(f"/{board_id}/{thread_id}")
