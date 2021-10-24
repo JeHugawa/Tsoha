@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, request, session, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
-import user_handler
+import user_handler, board_handler
 
 
 @app.route("/")
@@ -47,24 +47,13 @@ def logout():
 @app.route("/<int:board_id>", methods=["GET","POST"])
 def board(board_id):
     if request.method == "GET":
-        sql = "SELECT name, description FROM boards WHERE id=:board_id"
-        result = db.session.execute(sql, {"board_id":board_id})
-        info = result.fetchone()
-        sql = "SELECT topic, board_id, id, sent FROM threads where board_id=:board_id ORDER BY id DESC"
-        result = db.session.execute(sql, {"board_id":board_id})
-        return render_template("boards.html",board=result, metainfo=info, board_id=board_id)
+        info = board_handler.board_info(board_id)
+        board = board_handler.board_threads(board_id)
+        return render_template("boards.html",board=board, metainfo=info, board_id=board_id)
     if request.method == "POST":
         topic = request.form["topic"]
-        message = request.form["message"]    
-        sql = "INSERT INTO threads (board_id, topic,sent) VALUES (:board_id, :topic, CURRENT_TIMESTAMP)"
-        db.session.execute(sql, {"board_id":board_id, "topic":topic})
-        db.session.commit()
-        result = db.session.execute("SELECT ID FROM threads ORDER BY id DESC LIMIT 1")
-        thread_id = result.fetchone()
-        thread_id = thread_id[0]
-        sql = "INSERT INTO message (thread_id, poster_id, sent, message) VALUES (:thread_id, :poster_id, CURRENT_TIMESTAMP, :message)"
-        db.session.execute(sql, {"thread_id":thread_id, "poster_id":session["user_id"], "message":message})
-        db.session.commit()
+        message = request.form["message"]
+        board_handler.create_thread(board_id, topic, message)
         return redirect(f"/{board_id}")
 
 @app.route("/<int:board_id>/<int:thread_id>", methods=["GET","POST"])
