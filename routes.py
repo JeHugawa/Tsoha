@@ -1,6 +1,8 @@
 from app import app, db
 from flask import render_template, request, session, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
+import user_handler
+
 
 @app.route("/")
 def index():
@@ -16,19 +18,10 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        sql = "SELECT id, password FROM users WHERE username=:username"
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()
-        if not user:
-            return render_template("error.html", message="Käyttäjää ei ole olemassa")
+        if user_handler.login(username, password):
+            return redirect("/")
         else:
-            hash_value = user.password
-            if check_password_hash(hash_value, password):
-                session["username"] = username
-                session["user_id"] = user.id
-                return redirect("/")
-            else:
-                return render_template("error.html", message="Salasana ei täsmää")
+            return render_template("error.html", message="Salasana tai käyttäjä ei täsmää")
 
 
 @app.route("/register", methods=["POST", "GET"])
@@ -39,21 +32,15 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         password2 = request.form["password2"]
-        if password != password2:
-            return render_template("error.html", message="Salasanat ei täsmää")
+        if user_handler.register(username, password, password2):
+            return redirect("/")
         else:
-           hash_value = generate_password_hash(password)
-           sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-           db.session.execute(sql, {"username":username, "password":hash_value})
-           db.session.commit()
-           session["username"] = username 
-           return redirect("/")
+            return render_template("error.html", message="Salasanat ei täsmää")
 
 
 @app.route("/logout")
 def logout():
-    del session["username"]
-    del session["user_id"]
+    user_handler.logout()
     return redirect("/")
 
 
